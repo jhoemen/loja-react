@@ -24,17 +24,8 @@ export const clienteService = () => ({
     login: async (payload) => {
         try {
             const response = await api.post('/login', JSON.stringify(payload))
-            const dadosCliente = {
-                nome: 'jonathan',
-                email: payload.email,
-            }
 
-            let token = {
-                token: response.data.data,
-                cliente: dadosCliente,
-            }
-
-            let tokenEncripted = await criptografar(JSON.stringify(token))
+            let tokenEncripted = await criptografar(JSON.stringify(response.data.data))
             localStorage.setItem('token', tokenEncripted)
 
             return response.data
