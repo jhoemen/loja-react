@@ -1,25 +1,21 @@
-import { useEffect} from "react";
+import { useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
-import useApi from '../services/api';
+import { clienteService as useClienteService } from '../services/clienteService'
 
 const Logout = () => {
-    const api = useApi();
-    const history = useHistory();
+    const clienteService = useClienteService()
+    const history = useHistory()
 
-    useEffect(()=>{
-        const doLogout = async () =>{
-            await api.logout();
-            history.push('/login');
-        } 
+    useEffect(() => {
+        const doLogout = async () => {
+            await clienteService.logout()
+            history.push('/login')
+        }
 
-        doLogout();
-        // eslint-disable-next-line
-    },[]);
+        doLogout()
+    }, [])
 
-    return (
-            <>
-            </>
-            )
+    return <></>
 }
 
 export default Logout

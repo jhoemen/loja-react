@@ -14,7 +14,7 @@ export default function PrimaryInput(props) {
                 className={`form-control form-control-lg ${campoValid}`}
                 value={campoValue}
                 onChange={(e) => {
-                    setStat(e.target.value.toLocaleUpperCase())
+                    setStat(e.target.value)
                 }}
                 disabled={loading || formDisables || campoDisabled}
                 size="lg"

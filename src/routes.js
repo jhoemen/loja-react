@@ -1,11 +1,11 @@
 import React from 'react'
 
-// const Cobranca = React.lazy(() => import('./views/Cobranca'));
+const Produto = React.lazy(() => import('./views/produto/listaProduto'))
 // const Pagamento = React.lazy(() => import('./views/Pagamento'));
 
 const routes = [
     { path: '/', exact: true, name: 'Home' },
-    // { path: '/cobranca', name: 'Cobranca', component: Cobranca },
+    { path: '/produto', name: 'Produto', component: Produto },
     // { path: '/pagamento', name: 'Pagamento', component: Pagamento }
 ]
 

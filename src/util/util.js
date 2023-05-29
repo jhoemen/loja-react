@@ -20,7 +20,7 @@ export const campoVazio = (input) => {
     return input == undefined || input == null
 }
 
-export const criptografar = (value) => {
+export const criptografar = async (value) => {
     if (campoVazio(value)) return
 
     return CryptoJS.AES.encrypt(value, consts.SECRET_KEY_ENCRIPTY).toString()
@@ -28,7 +28,7 @@ export const criptografar = (value) => {
 
 export const descriptografar = (value) => {
     if (campoVazio(value)) return
-
+    console.log('consts.SECRET_KEY_ENCRIPTY', consts.SECRET_KEY_ENCRIPTY)
     var bytes = CryptoJS.AES.decrypt(value, consts.SECRET_KEY_ENCRIPTY)
     return bytes.toString(CryptoJS.enc.Utf8)
 }

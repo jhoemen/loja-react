@@ -2,10 +2,10 @@ import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { CAlert, CButton, CCard, CCardBody, CCol, CContainer, CForm, CFormInput, CInputGroup, CInputGroupText, CRow, CSpinner } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import useApi from '../services/api'
+import { clienteService as useClienteService } from 'src/services/clienteService'
 
 const Login = () => {
-    const api = useApi()
+    const clienteService = useClienteService()
     const history = useHistory()
 
     const [email, setEmail] = useState('')
@@ -18,22 +18,27 @@ const Login = () => {
 
     const handleLoginButton = async () => {
         setLoading(true)
+
         if (!(email && password)) {
             exibirMsg('Informe email e senha para prosseguir!')
             return
         }
 
-        const result = await api.login(email, password)
-        localStorage.setItem('AcceesToken', result.access_token)
-        if (result?.access_token) {
-            history.push('/')
+        const novoLogin = {
+            email: email,
+            password: password,
         }
 
-        exibirMsg(result?.mensagem?.descricao ?? 'Sistema indiponível no momento! Tente mais tarde.')
+        const result = await clienteService.login(novoLogin)
+
+        if (result?.success) {
+            history.push('/produto')
+        } else {
+            exibirMsg(result.message)
+        }
     }
 
     const handleCadastroButton = () => {
-        console.log('novo cliente')
         history.push('/novo-cliente')
     }
 

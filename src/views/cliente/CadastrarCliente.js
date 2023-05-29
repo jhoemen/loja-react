@@ -1,14 +1,14 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { CAlert, CButton, CCard, CCardBody, CCol, CContainer, CForm, CFormInput, CRow, CSpinner } from '@coreui/react'
-import useApi from '../../services/api'
-import InputMask from 'react-input-mask'
+import { CAlert, CButton, CCard, CCardBody, CCol, CContainer, CForm, CRow, CSpinner } from '@coreui/react'
 import PrimaryInputMask from 'src/componentes/input/PrimaryInputMask'
 import { validarCPF, validarCampoObrigatorio, validarEmail, validarPassword, validarPasswordConfirm } from '../../util/validate'
 import PrimaryInput from 'src/componentes/input/PrimaryInput'
+import { clienteService as useClienteService } from 'src/services/clienteService'
+import { somenteNumeros } from 'src/util/util'
 
 const Login = () => {
-    const api = useApi()
+    const clienteService = useClienteService()
     const history = useHistory()
 
     const [nome, setNome] = useState('')
@@ -79,19 +79,22 @@ const Login = () => {
 
         const novoCliente = {
             nome: nome,
-            email: email,
-            cpf: cpf,
+            email: email.toLowerCase(),
+            cpf: somenteNumeros(cpf),
             password: password,
             password_confirmation: passwordConfirmation,
         }
 
-        const result = await api.cadastrarCliente(novoCliente)
+        const result = await clienteService.cadastrarCliente(novoCliente)
 
-        if (result?.access_token) {
-            history.goBack()
+        if (result?.success) {
+            exibirMsg(result.message)
+            setTimeout(() => {
+                history.goBack()
+            }, 5000)
+        } else {
+            exibirMsg(result.message)
         }
-
-        exibirMsg(result?.mensagem?.descricao ?? 'Sistema indiponível no momento! Tente mais tarde.')
     }
 
     const handleVoltar = () => {
