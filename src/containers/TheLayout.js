@@ -15,6 +15,8 @@ const TheLayout = () => {
     const toaster = useRef()
 
     const [loading, setLoading] = useState(false)
+    const [isLogged, setLogged] = useState(false)
+
     const [cobranca, setCobranca] = useState(null)
     const [cobrancaSelecionada, setCobrancaSelecionada] = useState([])
     const [totalCobranca, setTotalCobranca] = useState(0)
@@ -96,28 +98,18 @@ const TheLayout = () => {
     }
 
     const checkLogin = async () => {
-        const token = clienteService.getToken()
+        var token = clienteService.getToken()
         console.log('token', token)
-        // if (!token) {
-        //     history.push('/login')
-        //     return
-        // }
+        if (!token) {
+            history.push('/login')
+            return
+        }
 
-        // if (!token?.cliente) {
-        //     localStorage.setItem('loginError', responseAPI.usuarioNaoEncontrado.descricao)
-        //     history.push('/logout')
-        //     return
-        // }
-
-        // if (!token?.cliente?.temLoginPortalDoCliente) {
-        //     let novoCliente = await api2.cadastrarClienteUsuarioPortalDoCliente(token?.cliente?.cpf)
-
-        //     if (novoCliente?.success == false) {
-        //         localStorage.setItem('loginError', responseAPI.ClienteNaoTemLoginPortalDoCliente.descricao)
-        //         history.push('/logout')
-        //         return
-        //     }
-        // }
+        if (!token?.cliente) {
+            localStorage.setItem('loginError', responseAPI.usuarioNaoEncontrado.descricao)
+            history.push('/logout')
+            return
+        }
 
         // const result = api.validateToken()
         // if (!result) {
@@ -126,11 +118,11 @@ const TheLayout = () => {
         //     return
         // }
 
+        setLogged(true)
         setLoading(false)
 
-        // let dadosCliente = token.cliente
-        // dadosCliente.cpf = token.cpf
-        // setCliente(dadosCliente)
+        let dadosCliente = token.cliente
+        setCliente(dadosCliente)
     }
 
     useEffect(() => {
@@ -146,7 +138,7 @@ const TheLayout = () => {
     return (
         <div>
             <header>
-                <TheHeader />
+                <TheHeader cliente={cliente} isLogged={isLogged} />
             </header>
             <CToaster ref={toaster} push={toast} placement="top-end" />
 

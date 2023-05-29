@@ -2,29 +2,8 @@ import React, { useEffect, useState } from 'react'
 
 import { CHeader, CRow, CContainer, CCol, CButton, CImage } from '@coreui/react'
 
-// import '@coreui/coreui/dist/css/coreui.min.css'
-// import 'bootstrap/dist/css/bootstrap.min.css'
-
-const TheHeader = () => {
-    // const api = useApi()
-
-    const [isLogged, setLogged] = useState(false)
-    const [cliente, setCliente] = useState(null)
-
-    useEffect(() => {
-        const checkLogged = () => {
-            setLogged(localStorage.getItem('token')?.length > 0)
-
-            // const token = api.getToken()
-            // if (token) {
-            //     if (token.cliente) {
-            //         setCliente(token.cliente)
-            //     }
-            // }
-        }
-
-        checkLogged()
-    }, [])
+const TheHeader = (props) => {
+    const { cliente, isLogged } = props
 
     return (
         <div className="header d-flex flex-column flex-md-row align-items-center">
