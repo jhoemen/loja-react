@@ -1,9 +1,9 @@
-import { isTokenValido } from 'src/util/validate'
 import { campoVazio, criptografar, descriptografar } from '../util/util'
 import api from './api'
 
 const getDecriptedToken = () => {
     let tokenEncripted = localStorage.getItem('token')
+    console.log('tokenEncripted------', tokenEncripted)
     if (campoVazio(tokenEncripted)) {
         return
     }
@@ -11,7 +11,7 @@ const getDecriptedToken = () => {
     return JSON.parse(descriptografar(tokenEncripted))
 }
 
-export const clienteService = () => ({
+export const produtoService = () => ({
     cadastrarCliente: async (payload) => {
         try {
             const response = await api.post('/cliente', JSON.stringify(payload))
@@ -24,8 +24,17 @@ export const clienteService = () => ({
     login: async (payload) => {
         try {
             const response = await api.post('/login', JSON.stringify(payload))
+            const dadosCliente = {
+                nome: 'jonathan',
+                email: payload.email,
+            }
 
-            let tokenEncripted = await criptografar(JSON.stringify(response.data.data))
+            let token = {
+                token: response.data.data,
+                cliente: dadosCliente,
+            }
+
+            let tokenEncripted = await criptografar(JSON.stringify(token))
             localStorage.setItem('token', tokenEncripted)
 
             return response.data
@@ -36,20 +45,11 @@ export const clienteService = () => ({
     },
 
     getToken: () => {
+        console.log('getToken')
         return getDecriptedToken()
     },
 
     logout: async () => {
         localStorage.removeItem('token')
-    },
-
-    validateToken: () => {
-        let tokenEncripted = localStorage.getItem('token')
-        if (campoVazio(tokenEncripted)) {
-            return
-        }
-
-        let token = JSON.parse(descriptografar(tokenEncripted))
-        return isTokenValido(token.expires_in)
     },
 })

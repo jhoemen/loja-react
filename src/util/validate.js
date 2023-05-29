@@ -1,89 +1,74 @@
-import { validarDigitoVerificadorCpf, somenteNumeros, validarFormatoEmail, validarData } from './util';
-import moment from 'moment';
+import { validarDigitoVerificadorCpf, somenteNumeros, validarFormatoEmail, validarData } from './util'
+import moment from 'moment'
 
 export const validarCampoObrigatorio = (strInput, nameInput = '') => {
-    let input = strInput?.toString().trim();
-    if(input?.length <= 0 || input === "" || input === undefined || input === null)
-        return `${ nameInput == '' ? 'Campo' : nameInput } precisa ser informado`;
+    let input = strInput?.toString().trim()
+    if (input?.length <= 0 || input === '' || input === undefined || input === null) return `${nameInput == '' ? 'Campo' : nameInput} precisa ser informado`
 
-    return '';
+    return ''
 }
 
-export const validarCPF = value => { 
-    let strCpf = somenteNumeros(value);
+export const validarCPF = (value) => {
+    let strCpf = somenteNumeros(value)
 
-    let msg = validarCampoObrigatorio(strCpf, 'CPF');
-    if( msg !== '')
-        return `${msg}!`;
+    let msg = validarCampoObrigatorio(strCpf, 'CPF')
+    if (msg !== '') return `${msg}!`
 
-    if(!validarDigitoVerificadorCpf(strCpf))
-        return 'O CPF é inválido!';
+    if (!validarDigitoVerificadorCpf(strCpf)) return 'O CPF é inválido!'
 
-    return '';
+    return ''
 }
 
-export const validarCNPJ = value => { 
-    let strCpf = somenteNumeros(value);
+export const validarCNPJ = (value) => {
+    let strCpf = somenteNumeros(value)
 
-    let msg = validarCampoObrigatorio(strCpf, 'CNPJ');
-    if( msg !== '')
-        return `${msg}!`;
+    let msg = validarCampoObrigatorio(strCpf, 'CNPJ')
+    if (msg !== '') return `${msg}!`
 
-    if(strCpf.length !== 14)
-        return 'O CNPJ é inválido!';
+    if (strCpf.length !== 14) return 'O CNPJ é inválido!'
 
-    return '';
+    return ''
 }
 
-export const validarEmail = email => {
-    let msg = validarCampoObrigatorio(email, 'Email');
-    if( msg !== '')
-        return `${msg}!`;
+export const validarEmail = (email) => {
+    let msg = validarCampoObrigatorio(email, 'Email')
+    if (msg !== '') return `${msg}!`
 
-    if(!validarFormatoEmail(email))
-        return "E-mail inválido!";
+    if (!validarFormatoEmail(email)) return 'E-mail inválido!'
 
-    return '';
+    return ''
 }
 
-export const validarPassword = pass => {
-    let msg = validarCampoObrigatorio(pass, 'Senha');
-    if( msg !== '')
-        return `${msg}!`;
+export const validarPassword = (pass) => {
+    let msg = validarCampoObrigatorio(pass, 'Senha')
+    if (msg !== '') return `${msg}!`
 
-    if(pass.length < 6)
-        return "A senha precisa ter no mínimo 6 digitos";
+    if (pass.length < 6) return 'A senha precisa ter no mínimo 6 digitos'
 
-    return '';
+    return ''
 }
 
 export const validarPasswordConfirm = (passConfirm, pass) => {
-    let msg = validarCampoObrigatorio(passConfirm, 'Confirmação de Senha');
-    if( msg !== '')
-        return `${msg}!`;
+    let msg = validarCampoObrigatorio(passConfirm, 'Confirmação de Senha')
+    if (msg !== '') return `${msg}!`
 
-    if(passConfirm !== pass)
-        return "A confirmação da senha digitida não confere com a senha informada!";
+    if (passConfirm !== pass) return 'A confirmação da senha digitida não confere com a senha informada!'
 
-    return '';
+    return ''
 }
 
 export const isTokenValido = (dataToken) => {
-    let agora = moment().format();
-    let validadeToken = moment(dataToken).format();
-
-    return validadeToken > agora;
+    let agora = Math.floor(Date.now() / 1000)
+    return dataToken > agora
 }
 
 export const validarCampoTipoData = (data, nomeInput = '') => {
-    console.log(data);
-    let msg = validarCampoObrigatorio(data, nomeInput);
-    if( msg !== '')
-        return `${msg}`;
+    let msg = validarCampoObrigatorio(data, nomeInput)
+    if (msg !== '') return `${msg}`
 
-    if(!validarData(data)){
-        return "A data informada é invalida!"
+    if (!validarData(data)) {
+        return 'A data informada é invalida!'
     }
 
-    return "";
+    return ''
 }

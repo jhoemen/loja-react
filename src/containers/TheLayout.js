@@ -9,7 +9,6 @@ import { clienteService as useClienteService } from '../services/clienteService'
 import { CToaster } from '@coreui/react'
 
 const TheLayout = () => {
-    console.log('TheLayout')
     const clienteService = useClienteService()
     const history = useHistory()
     const toaster = useRef()
@@ -99,7 +98,6 @@ const TheLayout = () => {
 
     const checkLogin = async () => {
         var token = clienteService.getToken()
-        console.log('token', token)
         if (!token) {
             history.push('/login')
             return
@@ -111,22 +109,19 @@ const TheLayout = () => {
             return
         }
 
-        // const result = api.validateToken()
-        // if (!result) {
-        //     localStorage.setItem('loginError', responseAPI.SessaoExpirada.descricao)
-        //     history.push('/logout')
-        //     return
-        // }
+        const result = clienteService.validateToken()
+        if (!result) {
+            localStorage.setItem('loginError', responseAPI.SessaoExpirada.descricao)
+            history.push('/logout')
+            return
+        }
 
         setLogged(true)
         setLoading(false)
-
-        let dadosCliente = token.cliente
-        setCliente(dadosCliente)
+        setCliente(token.cliente)
     }
 
     useEffect(() => {
-        console.log('checkLogin')
         checkLogin()
     }, [])
 
