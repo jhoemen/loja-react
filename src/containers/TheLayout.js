@@ -111,7 +111,7 @@ const TheLayout = () => {
     return (
         <div>
             <header>
-                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} />
+                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} totalCarrinho={totalCarrinho} />
             </header>
             <CToaster ref={toaster} push={toast} placement="top-end" />
 

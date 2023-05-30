@@ -8,10 +8,7 @@ const TheFooter = (props) => {
     var year = today.getFullYear()
 
     return (
-        <CFooter position="fixed">
-            <div className="width-100 content">
-                <div className="bg-white text-azul-claro text-center fs-1 p-3 mb-2 rounded-2 fw-bolder">VALOR TOTAL: {totalCarrinho}</div>
-            </div>
+        <CFooter>
             <div className="width-100 text-center">
                 <span>Copyright &copy; {year} - Loja Online</span>
             </div>

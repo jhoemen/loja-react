@@ -7,7 +7,7 @@ import { cilCart } from '@coreui/icons'
 import { ProdutoBox } from 'src/componentes'
 
 const TheHeader = (props) => {
-    const { cliente, isLogged, carrinho, removerProdutoCarrinho, quantidadeProdutoCarrinho } = props
+    const { cliente, isLogged, carrinho, removerProdutoCarrinho, quantidadeProdutoCarrinho, totalCarrinho } = props
 
     return (
         <div className="header d-flex flex-column flex-md-row align-items-center">
@@ -24,7 +24,7 @@ const TheHeader = (props) => {
             <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 {isLogged && (
                     <>
-                        <CDropdown autoClose={'false'} alignment={{ lg: 'end' }}>
+                        <CDropdown autoClose={false} alignment={{ lg: 'end' }}>
                             <CDropdownToggle>
                                 <CIcon icon={cilCart} size="xl" />
                                 <span className="badge bg-info ms-2">{quantidadeProdutoCarrinho}</span>
@@ -35,6 +35,8 @@ const TheHeader = (props) => {
                                 {carrinho?.map((item, idx) => {
                                     return <ProdutoBox item={item} key={idx} removerProdutoCarrinho={removerProdutoCarrinho} />
                                 })}
+                                <CDropdownDivider />
+                                <CDropdownItem disabled>VALOR TOTAL: {totalCarrinho}</CDropdownItem>
                                 <CDropdownDivider />
                                 <CDropdownItem href="\checkout">Finalizar Pedido</CDropdownItem>
                                 <CDropdownDivider />

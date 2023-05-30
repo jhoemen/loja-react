@@ -4,7 +4,7 @@ import consts from './consts'
 
 const baseUrl = consts.BASE_URL
 const tokenEncripted = localStorage.getItem('token')
-const token = ''
+var token = ''
 if (tokenEncripted) {
     token = JSON.parse(descriptografar(tokenEncripted)).token
 }
