@@ -1,9 +1,5 @@
-import TecladoVirtual from './TecladoVirtual'
-import {Toasters} from './Toasters'
-import ComprovantePagamento from './email/ComprovantePagamento'
+import { Toasters } from './Toasters'
+import Produto from './produto/Produto'
+import ProdutoBox from './carrinho/ProdutoBox'
 
-export {
-    TecladoVirtual,
-    Toasters,
-    ComprovantePagamento
-}
+export { Toasters, Produto, ProdutoBox }

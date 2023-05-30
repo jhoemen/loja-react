@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { descriptografar } from 'src/util/util'
 import consts from './consts'
 
 const baseUrl = consts.BASE_URL
-const token = localStorage.getItem('AcceesToken')
+const tokenEncripted = localStorage.getItem('token')
+const token = JSON.parse(descriptografar(tokenEncripted)).token
 
 const api = axios.create({
     baseURL: baseUrl,

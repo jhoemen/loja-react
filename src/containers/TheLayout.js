@@ -6,94 +6,62 @@ import { formatarModeaReal } from '../util/util'
 
 import { Toasters } from '../componentes/index'
 import { clienteService as useClienteService } from '../services/clienteService'
+import { produtoService as useProdutoService } from '../services/produtoService'
 import { CToaster } from '@coreui/react'
 
 const TheLayout = () => {
     const clienteService = useClienteService()
+    const produtoService = useProdutoService()
     const history = useHistory()
     const toaster = useRef()
 
     const [loading, setLoading] = useState(false)
     const [isLogged, setLogged] = useState(false)
 
-    const [cobranca, setCobranca] = useState(null)
-    const [cobrancaSelecionada, setCobrancaSelecionada] = useState([])
-    const [totalCobranca, setTotalCobranca] = useState(0)
+    const [carrinho, setCarrinho] = useState([])
+    const [totalCarrinho, setTotalCarrinho] = useState(0)
     const [cliente, setCliente] = useState(null)
+
     const [toast, addToast] = useState(0)
 
     const adicionarNotificacao = (mensagem, tipo) => {
         addToast(Toasters(mensagem, tipo))
     }
 
-    const adicionarCobrancaCarrinho = (titulo, elemento) => {
-        const isSelecionado = cobrancaSelecionada.filter((item) => {
-            return item.chave == titulo.chave ? true : false
-        })
+    const listarProdutoCarrinho = async () => {
+        const listaProdutoCarrinho = await produtoService.listarProdutoCarrinho()
+        setCarrinho(listaProdutoCarrinho.data.produto)
+    }
 
-        if (isSelecionado.length == 0) {
-            setCobrancaSelecionada((arrayCobrancas) => [...arrayCobrancas, titulo])
+    const adicionarProdutoCarrinho = async (produto) => {
+        const result = await produtoService.adicionarProduto(produto)
+
+        if (result.success) {
+            listarProdutoCarrinho()
         }
     }
 
-    const removerCobrancaCarrinho = (titulo, elemento) => {
-        const isSelecionado = cobrancaSelecionada.filter((item) => {
-            return item.chave != titulo.chave ? true : false
-        })
+    const removerProdutoCarrinho = async (produtoId) => {
+        const result = await produtoService.removerProduto(produtoId)
 
-        setCobrancaSelecionada(isSelecionado)
-    }
-
-    const listarCobrancaCarrinho = () => {
-        return cobrancaSelecionada
-    }
-
-    const atualizarCss = () => {
-        const cardSelecionados = document.getElementsByClassName('selecionado')
-
-        const elementsCardSelecionados = Array.from(cardSelecionados)
-
-        elementsCardSelecionados.forEach((element) => {
-            element.classList.remove('selecionado')
-        })
-
-        cobrancaSelecionada.forEach((element) => {
-            var cardSelecionado = document.getElementById(element.chave)
-            cardSelecionado = cardSelecionado.closest('.card')
-            cardSelecionado.classList.add('selecionado')
-        })
+        if (result.success) {
+            listarProdutoCarrinho()
+        }
     }
 
     const limparCobrancaCarrinho = () => {
-        setCobrancaSelecionada([])
+        setCarrinho([])
     }
 
-    const atualizarTotalCobranca = () => {
+    const atualizartotalCarrinho = () => {
         let total = 0
-        cobrancaSelecionada?.map((item, idx) => {
-            total += parseFloat(item.vl_recebido)
+        carrinho?.map((item, idx) => {
+            total += parseFloat(item.preco)
         })
 
         total = formatarModeaReal(total)
 
-        setTotalCobranca(total)
-    }
-
-    const consultarCobrancaPendente = async () => {
-        // if (cliente == null) {
-        //     return
-        // }
-        // let ListaCobrancasPendente = await api2.consultarCobrancaPendente(cliente.cpf)
-        // // LISTA DAS SITUAÇÕES DA COBRANÇA
-        // // situacao = 0 - Aberta
-        // // situacao = 1 - Paga
-        // // situacao = 2 - Cancelada
-        // // situacao = 3 - Futura
-        // ListaCobrancasPendente = await ListaCobrancasPendente.data.filter((item) => {
-        //     return item.situacao == 0 ? true : false
-        // })
-        // setCobranca(ListaCobrancasPendente)
-        // setLoading(false)
+        setTotalCarrinho(total)
     }
 
     const checkLogin = async () => {
@@ -119,6 +87,7 @@ const TheLayout = () => {
         setLogged(true)
         setLoading(false)
         setCliente(token.cliente)
+        listarProdutoCarrinho()
     }
 
     useEffect(() => {
@@ -126,14 +95,13 @@ const TheLayout = () => {
     }, [])
 
     useEffect(() => {
-        atualizarCss()
-        atualizarTotalCobranca()
-    }, [cobrancaSelecionada])
+        atualizartotalCarrinho()
+    }, [carrinho])
 
     return (
         <div>
             <header>
-                <TheHeader cliente={cliente} isLogged={isLogged} />
+                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} />
             </header>
             <CToaster ref={toaster} push={toast} placement="top-end" />
 
@@ -141,14 +109,14 @@ const TheLayout = () => {
                 <div className="container">
                     {!loading && (
                         <>
-                            <TheContent cliente={cliente} />
+                            <TheContent cliente={cliente} adicionarProdutoCarrinho={adicionarProdutoCarrinho} removerProdutoCarrinho={removerProdutoCarrinho} />
                         </>
                     )}
                 </div>
             </div>
 
             <footer>
-                <TheFooter cobrancaSelecionada={cobrancaSelecionada} totalCobranca={totalCobranca} adicionarNotificacao={adicionarNotificacao} />
+                <TheFooter carrinho={carrinho} totalCarrinho={totalCarrinho} adicionarNotificacao={adicionarNotificacao} />
             </footer>
         </div>
     )

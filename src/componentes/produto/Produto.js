@@ -1,7 +1,7 @@
 import { CFormLabel, CFormInput, CFormText, CCard, CCardImage, CCardBody, CCardTitle, CCardText, CButton, CCardSubtitle, CPlaceholder } from '@coreui/react'
 
-export default function ProdutoComponente(props) {
-    const { item: produto = [] } = props
+export default function Produto(props) {
+    const { item: produto = [], adicionarProdutoCarrinho, removerProdutoCarrinho } = props
 
     return (
         <>
@@ -11,7 +11,12 @@ export default function ProdutoComponente(props) {
                     <CCardTitle>{produto.nome}</CCardTitle>
                     <CCardSubtitle className="mb-2 text-medium-emphasis">{produto.preco}</CCardSubtitle>
                     <CCardText>{produto.descricao}</CCardText>
-                    <CButton className="text-end">Adicionar ao Carrinho</CButton>
+                    <CButton
+                        onClick={(e) => {
+                            adicionarProdutoCarrinho({ ...produto, quantidade: 1 })
+                        }}>
+                        Adicionar ao Carrinho
+                    </CButton>
                 </CCardBody>
             </CCard>
             <CCard>
