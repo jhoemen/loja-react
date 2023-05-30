@@ -24,7 +24,7 @@ const TheHeader = (props) => {
             <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 {isLogged && (
                     <>
-                        <CDropdown autoClose="true" popper="true" alignment={{ lg: 'end' }}>
+                        <CDropdown autoClose={'false'} alignment={{ lg: 'end' }}>
                             <CDropdownToggle>
                                 <CIcon icon={cilCart} size="xl" />
                                 <span className="badge bg-info ms-2">{quantidadeProdutoCarrinho}</span>
@@ -32,11 +32,11 @@ const TheHeader = (props) => {
                             <CDropdownMenu style={{ width: 'max-content' }}>
                                 <CDropdownItem disabled>{cliente?.nome}</CDropdownItem>
                                 <CDropdownDivider />
-
                                 {carrinho?.map((item, idx) => {
                                     return <ProdutoBox item={item} key={idx} removerProdutoCarrinho={removerProdutoCarrinho} />
                                 })}
-
+                                <CDropdownDivider />
+                                <CDropdownItem href="\checkout">Finalizar Pedido</CDropdownItem>
                                 <CDropdownDivider />
                                 <CDropdownItem href="\logout">Sair da Conta</CDropdownItem>
                             </CDropdownMenu>

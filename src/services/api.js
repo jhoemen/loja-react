@@ -4,7 +4,10 @@ import consts from './consts'
 
 const baseUrl = consts.BASE_URL
 const tokenEncripted = localStorage.getItem('token')
-const token = JSON.parse(descriptografar(tokenEncripted)).token
+const token = ''
+if (tokenEncripted) {
+    token = JSON.parse(descriptografar(tokenEncripted)).token
+}
 
 const api = axios.create({
     baseURL: baseUrl,
