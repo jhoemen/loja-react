@@ -20,6 +20,7 @@ const TheLayout = () => {
 
     const [carrinho, setCarrinho] = useState([])
     const [totalCarrinho, setTotalCarrinho] = useState(0)
+    const [quantidadeProdutoCarrinho, setquantidadeProdutoCarrinho] = useState(0)
     const [cliente, setCliente] = useState(null)
 
     const [toast, addToast] = useState(0)
@@ -30,7 +31,7 @@ const TheLayout = () => {
 
     const listarProdutoCarrinho = async () => {
         const listaProdutoCarrinho = await produtoService.listarProdutoCarrinho()
-        setCarrinho(listaProdutoCarrinho.data.produto)
+        setCarrinho(listaProdutoCarrinho.data.produto ?? [])
     }
 
     const adicionarProdutoCarrinho = async (produto) => {
@@ -62,6 +63,14 @@ const TheLayout = () => {
         total = formatarModeaReal(total)
 
         setTotalCarrinho(total)
+    }
+
+    const atualizarQuantidadeProdutoCarrinho = () => {
+        var total = carrinho.reduce(function (total) {
+            return total + 1
+        }, 0)
+
+        setquantidadeProdutoCarrinho(total)
     }
 
     const checkLogin = async () => {
@@ -96,12 +105,13 @@ const TheLayout = () => {
 
     useEffect(() => {
         atualizartotalCarrinho()
+        atualizarQuantidadeProdutoCarrinho()
     }, [carrinho])
 
     return (
         <div>
             <header>
-                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} />
+                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} />
             </header>
             <CToaster ref={toaster} push={toast} placement="top-end" />
 

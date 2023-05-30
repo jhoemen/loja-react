@@ -20,7 +20,7 @@ export default function ProdutoBox(props) {
                                 onClick={(e) => {
                                     removerProdutoCarrinho(produto.id)
                                 }}>
-                                Remover ao Carrinho
+                                Remover do Carrinho
                             </CButton>
                         </CCardBody>
                     </CCol>
