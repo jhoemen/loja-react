@@ -42,4 +42,13 @@ export const produtoService = () => ({
             return error.response.data
         }
     },
+
+    finalizarPedido: async () => {
+        try {
+            const response = await api.post('/finalizarPedido')
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    },
 })

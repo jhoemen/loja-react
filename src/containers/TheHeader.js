@@ -7,7 +7,7 @@ import { cilCart } from '@coreui/icons'
 import { ProdutoBox } from 'src/componentes'
 
 const TheHeader = (props) => {
-    const { cliente, isLogged, carrinho, removerProdutoCarrinho, quantidadeProdutoCarrinho, totalCarrinho } = props
+    const { cliente, isLogged, carrinho, removerProdutoCarrinho, quantidadeProdutoCarrinho, totalCarrinho, finalizarPedido } = props
 
     return (
         <div className="header d-flex flex-column flex-md-row align-items-center">
@@ -38,7 +38,9 @@ const TheHeader = (props) => {
                                 <CDropdownDivider />
                                 <CDropdownItem disabled>VALOR TOTAL: {totalCarrinho}</CDropdownItem>
                                 <CDropdownDivider />
-                                <CDropdownItem href="\checkout">Finalizar Pedido</CDropdownItem>
+                                <CDropdownItem href="#" onClick={finalizarPedido}>
+                                    Finalizar Pedido
+                                </CDropdownItem>
                                 <CDropdownDivider />
                                 <CDropdownItem href="\logout">Sair da Conta</CDropdownItem>
                             </CDropdownMenu>

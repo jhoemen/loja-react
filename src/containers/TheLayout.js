@@ -31,21 +31,24 @@ const TheLayout = () => {
 
     const listarProdutoCarrinho = async () => {
         const listaProdutoCarrinho = await produtoService.listarProdutoCarrinho()
+        var arrayProduto = []
 
-        const agruparProduto = listaProdutoCarrinho.data.produto.reduce((acumulador, item) => {
-            if (!acumulador[item.id]) {
-                acumulador[item.id] = []
-                acumulador[item.id] = { ...item }
-            } else {
-                ++acumulador[item.id].quantidade
-            }
+        if (listaProdutoCarrinho?.data !== '') {
+            const agruparProduto = listaProdutoCarrinho.data.produto.reduce((acumulador, item) => {
+                if (!acumulador[item.id]) {
+                    acumulador[item.id] = []
+                    acumulador[item.id] = { ...item }
+                } else {
+                    ++acumulador[item.id].quantidade
+                }
 
-            return acumulador
-        }, [])
+                return acumulador
+            }, [])
 
-        const arrayProduto = Object.keys(agruparProduto).map(function (key) {
-            return agruparProduto[key]
-        })
+            arrayProduto = Object.keys(agruparProduto).map(function (key) {
+                return agruparProduto[key]
+            })
+        }
 
         setCarrinho(arrayProduto ?? [])
     }
@@ -90,6 +93,14 @@ const TheLayout = () => {
         setquantidadeProdutoCarrinho(total)
     }
 
+    const finalizarPedido = async () => {
+        const result = await produtoService.finalizarPedido()
+
+        if (result.success) {
+            listarProdutoCarrinho()
+        }
+    }
+
     const checkLogin = async () => {
         var token = clienteService.getToken()
         if (!token) {
@@ -128,7 +139,7 @@ const TheLayout = () => {
     return (
         <div>
             <header>
-                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} totalCarrinho={totalCarrinho} />
+                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} totalCarrinho={totalCarrinho} finalizarPedido={finalizarPedido} />
             </header>
             <CToaster ref={toaster} push={toast} placement="top-end" />
 
@@ -136,7 +147,7 @@ const TheLayout = () => {
                 <div className="container">
                     {!loading && (
                         <>
-                            <TheContent cliente={cliente} adicionarProdutoCarrinho={adicionarProdutoCarrinho} removerProdutoCarrinho={removerProdutoCarrinho} />
+                            <TheContent cliente={cliente} adicionarProdutoCarrinho={adicionarProdutoCarrinho} removerProdutoCarrinho={removerProdutoCarrinho} finalizarPedido={finalizarPedido} />
                         </>
                     )}
                 </div>
