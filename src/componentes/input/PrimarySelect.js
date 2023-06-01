@@ -2,7 +2,7 @@ import { CFormLabel, CFormText, CFormSelect } from '@coreui/react'
 
 export default function PrimarySelect(props) {
     const { campoName, label: campoLabel, value: campoValue, options: campoOptions, setStat, valid: campoValid, validMensagem: campoValidMensagem, campoDisabled, disables: formDisables = false, loading = false } = props
-    console.log('props', props)
+
     return (
         <>
             <CFormLabel htmlFor={campoName} className="mt-2">

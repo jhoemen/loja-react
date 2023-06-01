@@ -8,10 +8,6 @@ import { CButton, CCard, CCardBody, CCardFooter, CCardHeader, CCardTitle, CCol, 
 const Checkout = (props) => {
     const { adicionarProdutoCarrinho, removerProdutoCarrinho, carrinho, totalCarrinho, quantidadeProdutoCarrinho, finalizarPedido, limparCarrinho } = props
 
-    useEffect(() => {
-        console.log('carrinho', carrinho)
-    }, [])
-
     return (
         <>
             <CContainer>
