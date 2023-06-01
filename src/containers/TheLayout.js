@@ -58,6 +58,9 @@ const TheLayout = () => {
 
         if (result.success) {
             listarProdutoCarrinho()
+            adicionarNotificacao(result.message, 'sucesso')
+        } else {
+            adicionarNotificacao(result.message, 'erro')
         }
     }
 
@@ -66,6 +69,9 @@ const TheLayout = () => {
 
         if (result.success) {
             listarProdutoCarrinho()
+            adicionarNotificacao(result.message, 'sucesso')
+        } else {
+            adicionarNotificacao(result.message, 'erro')
         }
     }
 
@@ -94,6 +100,10 @@ const TheLayout = () => {
 
         if (result.success) {
             listarProdutoCarrinho()
+            adicionarNotificacao(result.message, 'sucesso')
+            history.push('/produto')
+        } else {
+            adicionarNotificacao(result.message, 'erro')
         }
     }
 
@@ -102,6 +112,10 @@ const TheLayout = () => {
 
         if (result.success) {
             listarProdutoCarrinho()
+            adicionarNotificacao(result.message, 'sucesso')
+            history.push('/produto')
+        } else {
+            adicionarNotificacao(result.message, 'erro')
         }
     }
 
