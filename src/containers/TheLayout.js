@@ -86,8 +86,8 @@ const TheLayout = () => {
     }
 
     const atualizarQuantidadeProdutoCarrinho = () => {
-        var total = carrinho.reduce(function (total) {
-            return total + 1
+        var total = carrinho.reduce(function (acc, item) {
+            return (acc += item.quantidade)
         }, 0)
 
         setquantidadeProdutoCarrinho(total)

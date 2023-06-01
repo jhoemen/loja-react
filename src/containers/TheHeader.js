@@ -24,7 +24,7 @@ const TheHeader = (props) => {
             <nav className="d-inline-flex mt-2 mt-md-0 ms-md-auto">
                 {isLogged && (
                     <>
-                        <CDropdown autoClose={false} alignment={{ lg: 'end' }}>
+                        <CDropdown autoClose="inside" alignment={{ lg: 'end' }}>
                             <CDropdownToggle>
                                 <CIcon icon={cilCart} size="xl" />
                                 <span className="badge bg-info ms-2">{quantidadeProdutoCarrinho}</span>
