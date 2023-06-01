@@ -51,4 +51,13 @@ export const produtoService = () => ({
             return error.response.data
         }
     },
+
+    limparCarrinho: async () => {
+        try {
+            const response = await api.post('/limparCarrinho')
+            return response.data
+        } catch (error) {
+            return error.response.data
+        }
+    },
 })

@@ -69,10 +69,6 @@ const TheLayout = () => {
         }
     }
 
-    const limparCobrancaCarrinho = () => {
-        setCarrinho([])
-    }
-
     const atualizartotalCarrinho = () => {
         let total = 0
 
@@ -95,6 +91,14 @@ const TheLayout = () => {
 
     const finalizarPedido = async () => {
         const result = await produtoService.finalizarPedido()
+
+        if (result.success) {
+            listarProdutoCarrinho()
+        }
+    }
+
+    const limparCarrinho = async () => {
+        const result = await produtoService.limparCarrinho()
 
         if (result.success) {
             listarProdutoCarrinho()
@@ -139,7 +143,7 @@ const TheLayout = () => {
     return (
         <div>
             <header>
-                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} totalCarrinho={totalCarrinho} finalizarPedido={finalizarPedido} />
+                <TheHeader cliente={cliente} isLogged={isLogged} carrinho={carrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} totalCarrinho={totalCarrinho} finalizarPedido={finalizarPedido} limparCarrinho={limparCarrinho} />
             </header>
             <CToaster ref={toaster} push={toast} placement="top-end" />
 
@@ -147,7 +151,7 @@ const TheLayout = () => {
                 <div className="container">
                     {!loading && (
                         <>
-                            <TheContent cliente={cliente} adicionarProdutoCarrinho={adicionarProdutoCarrinho} removerProdutoCarrinho={removerProdutoCarrinho} finalizarPedido={finalizarPedido} />
+                            <TheContent cliente={cliente} adicionarProdutoCarrinho={adicionarProdutoCarrinho} removerProdutoCarrinho={removerProdutoCarrinho} quantidadeProdutoCarrinho={quantidadeProdutoCarrinho} totalCarrinho={totalCarrinho} finalizarPedido={finalizarPedido} limparCarrinho={limparCarrinho} carrinho={carrinho} />
                         </>
                     )}
                 </div>

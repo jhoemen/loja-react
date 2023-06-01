@@ -1,12 +1,12 @@
 import React from 'react'
 
 const ListaProduto = React.lazy(() => import('./views/produto/listaProduto'))
-// const Pagamento = React.lazy(() => import('./views/Pagamento'));
+const Checkout = React.lazy(() => import('./views/checkout/checkout'))
 
 const routes = [
     { path: '/', exact: true, name: 'Home' },
     { path: '/produto', name: 'lista Produto', component: ListaProduto },
-    // { path: '/pagamento', name: 'Pagamento', component: Pagamento }
+    { path: '/checkout', name: 'Checkout', component: Checkout },
 ]
 
 export default routes
