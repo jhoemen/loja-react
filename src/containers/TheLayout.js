@@ -31,7 +31,23 @@ const TheLayout = () => {
 
     const listarProdutoCarrinho = async () => {
         const listaProdutoCarrinho = await produtoService.listarProdutoCarrinho()
-        setCarrinho(listaProdutoCarrinho.data.produto ?? [])
+
+        const agruparProduto = listaProdutoCarrinho.data.produto.reduce((acumulador, item) => {
+            if (!acumulador[item.id]) {
+                acumulador[item.id] = []
+                acumulador[item.id] = { ...item }
+            } else {
+                ++acumulador[item.id].quantidade
+            }
+
+            return acumulador
+        }, [])
+
+        const arrayProduto = Object.keys(agruparProduto).map(function (key) {
+            return agruparProduto[key]
+        })
+
+        setCarrinho(arrayProduto ?? [])
     }
 
     const adicionarProdutoCarrinho = async (produto) => {
@@ -56,9 +72,10 @@ const TheLayout = () => {
 
     const atualizartotalCarrinho = () => {
         let total = 0
-        carrinho?.map((item, idx) => {
-            total += parseFloat(item.preco)
-        })
+
+        total = carrinho.reduce((acc, item) => {
+            return (acc += item.quantidade * item.preco)
+        }, 0)
 
         total = formatarModeaReal(total)
 

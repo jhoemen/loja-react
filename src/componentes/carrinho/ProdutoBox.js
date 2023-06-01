@@ -13,8 +13,8 @@ export default function ProdutoBox(props) {
                     <CCol md={8}>
                         <CCardBody className="text-break">
                             <CCardTitle>{produto.nome}</CCardTitle>
-                            <CCardSubtitle className="mb-2 text-medium-emphasis">{produto.preco}</CCardSubtitle>
-                            <CCardText>{produto.descricao}</CCardText>
+                            <CCardSubtitle className="mb-2 text-medium-emphasis">Preço: {produto.preco}</CCardSubtitle>
+                            <CCardSubtitle className="mb-2 text-medium-emphasis">Quantidade: {produto.quantidade}</CCardSubtitle>
                             <CButton
                                 className="btn-danger"
                                 onClick={(e) => {
